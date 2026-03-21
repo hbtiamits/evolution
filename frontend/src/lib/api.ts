@@ -38,6 +38,59 @@ export async function getDomains(): Promise<string[]> {
   return res.json();
 }
 
+// --- Quiz types ---
+
+export interface QuizQuestion {
+  id: number;
+  question: string;
+  options: string[];
+}
+
+export interface QuizData {
+  quiz_id: string;
+  course_id: string;
+  questions: QuizQuestion[];
+}
+
+export interface AnswerResult {
+  question_id: number;
+  question: string;
+  selected_index: number;
+  correct_index: number;
+  is_correct: boolean;
+  explanation: string;
+}
+
+export interface SubmitResult {
+  score: number;
+  total: number;
+  percentage: number;
+  results: AnswerResult[];
+}
+
+export async function getQuiz(courseId: string): Promise<QuizData | null> {
+  const res = await fetch(`${API_URL}/api/courses/${courseId}/quiz`, { cache: "no-store" });
+  if (res.status === 404) return null;
+  if (!res.ok) throw new Error("Failed to fetch quiz");
+  return res.json();
+}
+
+export async function generateQuiz(courseId: string): Promise<QuizData> {
+  const res = await fetch(`${API_URL}/api/courses/${courseId}/quiz/generate`, { method: "POST" });
+  if (!res.ok) throw new Error("Failed to generate quiz");
+  return res.json();
+}
+
+export async function submitQuiz(courseId: string, answers: number[]): Promise<SubmitResult> {
+  const res = await fetch(`${API_URL}/api/courses/${courseId}/quiz/submit`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ answers }),
+  });
+  if (!res.ok) throw new Error("Failed to submit quiz");
+  return res.json();
+}
+
 export function formatDomain(domain: string): string {
   return domain.replace(/_/g, " ").replace(/\b\w/g, (c) => c.toUpperCase());
 }

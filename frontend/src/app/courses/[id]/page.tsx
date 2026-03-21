@@ -43,6 +43,20 @@ export default async function CoursePage({ params }: { params: Promise<{ id: str
         )}
       </div>
 
+      {/* Quiz CTA */}
+      <div className="mb-10 p-5 border border-indigo-500/25 rounded-xl bg-indigo-500/5 flex items-center justify-between">
+        <div>
+          <p className="text-white font-medium">Ready to test yourself?</p>
+          <p className="text-white/40 text-sm">Take a 5-question quiz on this course</p>
+        </div>
+        <Link
+          href={`/courses/${id}/quiz`}
+          className="px-5 py-2.5 bg-indigo-600 hover:bg-indigo-500 text-white text-sm font-semibold rounded-xl transition-colors flex-shrink-0"
+        >
+          Take Quiz →
+        </Link>
+      </div>
+
       {/* Modules */}
       <div className="space-y-8">
         {sortedModules.map((module, index) => (
