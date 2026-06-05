@@ -6,7 +6,7 @@ import logging
 from database import engine, SessionLocal
 from models.course import Course
 from models import *  # ensure all models are registered
-from routers import courses_router
+from routers import courses_router, video_router
 from pipeline import start_scheduler
 
 logging.basicConfig(level=logging.INFO)
@@ -46,6 +46,7 @@ app.add_middleware(
 )
 
 app.include_router(courses_router)
+app.include_router(video_router)
 
 
 @app.get("/health")

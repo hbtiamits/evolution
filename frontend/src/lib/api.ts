@@ -49,3 +49,38 @@ export function formatDate(dateStr: string): string {
     day: "numeric",
   });
 }
+
+// ---- Video API ----
+
+export interface VideoJob {
+  job_id: string;
+  status: "processing" | "done" | "error";
+  progress: number;
+  message: string;
+  title?: string;
+  subtitle?: string;
+  scenes?: number;
+  duration?: number;
+  video_url?: string;
+  error?: string;
+}
+
+export async function startVideoGeneration(prompt: string): Promise<{ job_id: string }> {
+  const res = await fetch(`${API_URL}/api/video/generate`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ prompt }),
+  });
+  if (!res.ok) throw new Error("Failed to start video generation");
+  return res.json();
+}
+
+export async function getVideoJob(jobId: string): Promise<VideoJob> {
+  const res = await fetch(`${API_URL}/api/video/jobs/${jobId}`);
+  if (!res.ok) throw new Error("Failed to fetch job status");
+  return res.json();
+}
+
+export function getVideoStreamUrl(jobId: string): string {
+  return `${API_URL}/api/video/stream/${jobId}`;
+}

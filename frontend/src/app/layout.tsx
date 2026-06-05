@@ -3,8 +3,8 @@ import "./globals.css";
 import Link from "next/link";
 
 export const metadata: Metadata = {
-  title: "AI Course Generator",
-  description: "Autonomous AI-powered courses generated daily from latest research",
+  title: "Evolution — AI Tools",
+  description: "AI-powered courses and video generation",
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
@@ -14,11 +14,14 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <nav className="border-b border-white/10 px-6 py-4">
           <div className="max-w-6xl mx-auto flex items-center justify-between">
             <Link href="/" className="text-xl font-bold text-white tracking-tight">
-              AI Courses
+              Evolution
             </Link>
             <div className="flex gap-6 text-sm text-white/60">
-              <Link href="/" className="hover:text-white transition-colors">Browse</Link>
+              <Link href="/" className="hover:text-white transition-colors">Courses</Link>
               <Link href="/domains" className="hover:text-white transition-colors">Domains</Link>
+              <Link href="/video" className="hover:text-white transition-colors text-indigo-400 hover:text-indigo-300">
+                Video Generator
+              </Link>
             </div>
           </div>
         </nav>
